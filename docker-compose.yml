@@ -6,7 +6,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:80" # React
+      - "3000:3000" # React
     depends_on:
       - backend 
     networks:
