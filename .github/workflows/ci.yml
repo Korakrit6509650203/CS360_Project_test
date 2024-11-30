@@ -16,21 +16,25 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
+      
       - name: Build and Push Backend Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest -f backend/Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
-
+      
       - name: Pull and Run Backend Container
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
-          docker run -d --name test-backend-container --memory="8g" --memory-swap="16g" --network host ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest tail -f /dev/null
-
+          docker run -d --name test-backend-container \
+            --memory="8g" \
+            --memory-swap="16g" \
+            ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest \
+            tail -f /dev/null
+      
       - name: Run Backend Tests
         run: |
           docker ps
-          docker exec test-backend-container npm test
+          docker exec test-backend-container npm run test-back
 
       - name: Backend Cleanup
         if: always()
@@ -57,11 +61,15 @@ jobs:
       - name: Pull and Run Frontend Container
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
-          docker run -d --name test-frontend-container --memory="8g" --memory-swap="16g" --network host ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest tail -f /dev/null
+          docker run -d --name test-frontend-container \
+            --memory="8g" \
+            --memory-swap="16g" \
+            ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest \
+            tail -f /dev/null
 
       - name: Install Dependencies and Run Frontend Tests
         run: |
-          docker exec test-frontend-container sh -c "npm install --force && npm install sweetalert2 --force && npm run start & npm run test"
+          docker exec test-frontend-container sh -c "npm install --force && npm install sweetalert2 --force && npm run test"
 
       - name: Frontend Cleanup
         if: always()
