@@ -20,7 +20,7 @@ jobs:
         id: check_images
         run: |
           # Check if the client Docker image exists
-          CLIENT_REPOSITORY="${{ secrets.DOCKER_USERNAME }}/cs360_client_image_test"  # Replace with your DockerHub repository name
+          CLIENT_REPOSITORY="${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test"  # Replace with your DockerHub repository name
           CLIENT_TAG="latest"
           CLIENT_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -u "${{ secrets.DOCKER_USERNAME }}:${{ secrets.DOCKER_TOKEN }}" https://hub.docker.com/v2/repositories/${CLIENT_REPOSITORY}/tags/${CLIENT_TAG}/)
           if [ "$CLIENT_RESPONSE" -ne 200 ]; then
