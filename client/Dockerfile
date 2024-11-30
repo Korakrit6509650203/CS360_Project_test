@@ -4,7 +4,7 @@ FROM node:20
 # ตั้งค่า working directory
 WORKDIR /usr/src/app
 
-# คัดลอก package.json และ package-lock.json
+# คัดลอก package.json
 COPY package.json ./
 
 # ติดตั้ง dependencies
