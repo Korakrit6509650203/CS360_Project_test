@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../backend/mockConfig/server'); // ปรับเส้นทางให้ตรงกับแอป Express ของคุณ
+const app = require('../../backend/mockConfig/server');
 const Account = require('../models/Account');
 const sequelize = require('../../backend/mockConfig/database'); // นำเข้าการตั้งค่า sequelize
 

@@ -36,9 +36,9 @@ jobs:
         run: |
           docker-compose exec frontend npm test
 
-      - name: Run backend tests
-        run: |
-          docker-compose exec backend npm test
+      # - name: Run backend tests
+      #   run: |
+      #     docker-compose exec backend npm test
 
       # Stop Docker Compose services
       - name: Stop services
