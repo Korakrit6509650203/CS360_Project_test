@@ -16,31 +16,55 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      
 
-        # Install Docker Compose
-      - name: Install Docker Compose
+      - name: Build and Push Backend Docker Image
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose version
- 
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest -f backend/Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
 
-      # Build Docker Compose services
-      - name: Build and start services
-        run: 
-          docker-compose up --build -d
-
-      # Run tests
-      - name: Run frontend tests
+      - name: Pull and Run Backend Container
         run: |
-          docker-compose exec frontend npm test
+          docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest
+          docker run -d --name test-backend-container --memory="8g" --memory-swap="16g" --network host ${{ secrets.DOCKER_USERNAME }}/cs360_backend_image_test:latest tail -f /dev/null
 
-      # - name: Run backend tests
-      #   run: |
-      #     docker-compose exec backend npm test
+      - name: Run Backend Tests
+        run: |
+          docker ps
+          docker exec test-backend-container npm test
 
-      # Stop Docker Compose services
-      - name: Stop services
+      - name: Backend Cleanup
         if: always()
-        run: docker-compose down
+        run: |
+          docker stop test-backend-container || true
+          docker rm test-backend-container || true
+
+  frontend-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and Push Frontend Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest -f client/Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
+
+      - name: Pull and Run Frontend Container
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
+          docker run -d --name test-frontend-container --memory="8g" --memory-swap="16g" --network host ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest tail -f /dev/null
+
+      - name: Install Dependencies and Run Frontend Tests
+        run: |
+          docker exec test-frontend-container sh -c "npm install --force && npm install sweetalert2 --force && npm run start & npm run test"
+
+      - name: Frontend Cleanup
+        if: always()
+        run: |
+          docker stop test-frontend-container || true
+          docker rm test-frontend-container || true
