@@ -18,9 +18,6 @@ RUN echo "REACT_APP_DEV_URL=http://$PUBLIC_IP:1337" >> .env && \
     echo "REACT_APP_STRIPE_APP_KEY=$(openssl rand -hex 32)" >> .env && \
     echo "REACT_APP_STRIPE_PUBLISHABLE_KEY=$(openssl rand -hex 32)" >> .env
 
-# Build the app
-RUN npm run build
-
 # Expose port
 EXPOSE 3000
 
