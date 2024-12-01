@@ -15,7 +15,7 @@ COPY backend/mockConfig ./mockConfig
 COPY backend/routes ./routes
 COPY backend/src ./src
 COPY backend/public ./public
-COPY backend/config ./config
+COPY backend//config/database.js ./config/database.js
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
