@@ -13,6 +13,8 @@ RUN npm install --force
 # คัดลอกไฟล์โค้ดทั้งหมด
 COPY backend/public ./public
 COPY backend/config/database.js ./config/database.js
+COPY backend/config/server.js ./config/server.js
+COPY backend/config ./config
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
 RUN echo "HOST=0.0.0.0" >> .env && \
