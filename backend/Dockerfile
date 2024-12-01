@@ -15,7 +15,7 @@ COPY backend/mockConfig ./mockConfig
 COPY backend/routes ./routes
 COPY backend/src ./src
 COPY backend/public ./public
-COPY backend/config/database.js ./config/database.js
+COPY backend/config ./config
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
@@ -46,4 +46,4 @@ COPY --from=build /usr/src/app .
 EXPOSE 1337
 
 # เริ่มแอป Strapi
-CMD ["npm", "start"]
+CMD ["sh", "-c", "source .env && npm start"]
