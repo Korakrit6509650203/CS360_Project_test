@@ -11,7 +11,7 @@ COPY package.json package-lock.json ./
 RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
-COPY . .
+# COPY . .
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
