@@ -14,9 +14,9 @@ newgrp docker
 echo "Starting Docker pull and run..."
 
 sudo docker pull korakrit/cs360_frontend_image_test:latest
-docker run -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
+sudo docker run -p 3001:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
 
 sudo docker pull korakrit/cs360_backtend_image_test:latest
-docker run -p 1337:1337 --name cs360_backtend_container korakrit/cs360_backtend_image_test:latest
+sudo docker run -p 1337:1337 --name cs360_backtend_container korakrit/cs360_backtend_image_test:latest
 
 echo "Docker containers are running."
