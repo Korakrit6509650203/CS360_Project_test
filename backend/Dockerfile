@@ -13,7 +13,7 @@ RUN npm install --force
 # คัดลอกไฟล์โค้ดทั้งหมด
 COPY backend/ .
 
-# สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
+# สร้างไฟล์ .env โดยสุ่มค่าต่าง
 RUN apk add --no-cache openssl && \
     echo "HOST=0.0.0.0" >> .env && \
     echo "PORT=1337" >> .env && \
