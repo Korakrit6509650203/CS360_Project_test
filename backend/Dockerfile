@@ -14,6 +14,17 @@ RUN npm install --force
 COPY backend/public ./public
 COPY backend/config/database.js ./config/database.js
 
+# สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
+RUN echo "HOST=0.0.0.0" >> .env && \
+    echo "PORT=1337" >> .env && \
+    echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env && \
+    echo "API_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
+    echo "ADMIN_JWT_SECRET=$(openssl rand -base64 32)" >> .env && \
+    echo "TRANSFER_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
+    echo "# Database" >> .env && \
+    echo "DATABASE_CLIENT=sqlite" >> .env && \
+    echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
+    echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
