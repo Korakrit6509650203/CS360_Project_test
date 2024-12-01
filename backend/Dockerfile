@@ -5,13 +5,15 @@ FROM node:20
 WORKDIR /usr/src/app
 
 # คัดลอก package.json
-COPY package.json ./
+COPY backend/package*.json ./
 
 # ติดตั้ง dependencies
 RUN npm install --force
 
 # คัดลอกโค้ดทั้งหมดไปยัง container
-COPY . .
+COPY backend/public ./public
+COPY backend/src ./src
+COPY backend/routes ./sroute
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
 RUN echo "HOST=0.0.0.0" >> .env && \
@@ -25,8 +27,15 @@ RUN echo "HOST=0.0.0.0" >> .env && \
     echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
     echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
+# Build the app
+RUN npm run build
+
+# ติดตั้ง serve เพื่อ serve static files
+RUN npm install -g serve
+
 # เปิด port ที่ต้องการ
 EXPOSE 1337
 
 # รันแอปพลิเคชัน
-CMD ["npm", "run", "develop"]
+# Start the app using serve
+CMD ["serve", "-s", "build", "-l", "1337"]
