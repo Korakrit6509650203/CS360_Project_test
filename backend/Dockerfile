@@ -11,11 +11,6 @@ COPY backend/package.json backend/package-lock.json ./
 RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
-# COPY backend/public ./public
-# COPY backend/config/database.js ./config/database.js
-# COPY backend/config/server.js ./config/server.js
-# COPY backend/config/middlewares.js ./config/middlewares.js
-# COPY backend/mockConfig/server.js ./mockConfig/server.js
 COPY backend/ .
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
