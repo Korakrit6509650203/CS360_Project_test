@@ -13,8 +13,8 @@ RUN npm install --force
 # คัดลอกโค้ดทั้งหมดไปยัง container
 COPY backend/public ./public
 COPY backend/src ./src
-COPY backend/routes ./sroute
-COPY backend/tests ./tests
+COPY backend/routes ./route
+COPY backend/mockConfig ./mockConfig
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
 RUN echo "HOST=0.0.0.0" >> .env && \
@@ -37,6 +37,5 @@ RUN npm install -g serve
 # เปิด port ที่ต้องการ
 EXPOSE 1337
 
-# รันแอปพลิเคชัน
 # Start the app using serve
 CMD ["serve", "-s", "build", "-l", "1337"]
