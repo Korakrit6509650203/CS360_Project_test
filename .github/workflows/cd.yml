@@ -5,6 +5,10 @@ on:
     workflows: ["CI - Backend and Frontend Docker Testing"]
     types:
       - completed
+    
+  push:
+    branches:
+      - '*'
       
 
 jobs:
