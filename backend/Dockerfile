@@ -11,11 +11,12 @@ COPY backend/package.json backend/package-lock.json ./
 RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
-COPY backend/public ./public
-COPY backend/config/database.js ./config/database.js
-COPY backend/config/server.js ./config/server.js
-COPY backend/config/middlewares.js ./config/middlewares.js
-COPY backend/mockConfig/server.js ./mockConfig/server.js
+# COPY backend/public ./public
+# COPY backend/config/database.js ./config/database.js
+# COPY backend/config/server.js ./config/server.js
+# COPY backend/config/middlewares.js ./config/middlewares.js
+# COPY backend/mockConfig/server.js ./mockConfig/server.js
+COPY backend/ .
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
 RUN apk add --no-cache openssl && \
@@ -29,7 +30,6 @@ RUN apk add --no-cache openssl && \
     echo "DATABASE_CLIENT=sqlite" >> .env && \
     echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
     echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
-# RUN echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env
 
 RUN cat .env
 # สร้างไฟล์ build (ใช้สำหรับ Production)
