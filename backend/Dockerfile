@@ -1,5 +1,5 @@
 # ใช้ Node.js เป็น base image
-FROM node:18-alpine AS build
+FROM node:20
 
 # กำหนด Working Directory
 WORKDIR /usr/src/app
@@ -10,13 +10,11 @@ COPY backend/package.json ./
 # ติดตั้ง dependencies
 RUN npm install --force
 
-# คัดลอกไฟล์โค้ดทั้งหมด
-# COPY . .
-
 # คัดลอกโค้ดทั้งหมดไปยัง container
 COPY backend/mockConfig ./mockConfig
 COPY backend/routes ./routes
 COPY backend/src ./src
+COPY backend/public ./public
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
@@ -32,7 +30,7 @@ RUN mkdir -p .tmp && \
     echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
 # ใช้ Alpine Linux เพื่อรันแอปใน Production
-FROM node:18-alpine
+FROM node:20
 
 # กำหนด Working Directory
 WORKDIR /usr/src/app
