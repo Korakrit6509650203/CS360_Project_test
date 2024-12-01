@@ -15,7 +15,7 @@ COPY backend/public ./public
 COPY backend/src ./src
 COPY backend/routes ./route
 COPY backend/mockConfig ./mockConfig
-COPY backend/test ./test
+COPY backend/tests ./tests
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
 RUN echo "HOST=0.0.0.0" >> .env && \
