@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 
 # ติดตั้ง dependencies
-RUN npm install
+RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
 COPY . .
