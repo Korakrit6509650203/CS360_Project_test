@@ -40,18 +40,14 @@ FROM node:18-alpine
 # กำหนด Working Directory
 WORKDIR /usr/src/app
 
+# ระบุไฟล์ที่ต้องการคัดลอกจาก stage "build"
+COPY --from=build /usr/src/app/dist ./dist
+
 # คัดลอก Dependencies จาก stage build มา
 COPY --from=build /usr/src/app/node_modules ./node_modules
 
-# คัดลอกไฟล์ .env ที่สร้างในขั้นตอน build
-COPY --from=build /usr/src/app/.env ./.env
-
-# คัดลอกไฟล์โค้ดทั้งหมด (รวมไฟล์ build)
-COPY --from=build /usr/src/app/config/server.js ./config/server.js
-
 # คัดลอกไฟล์โค้ดทั้งหมด (รวมไฟล์ build)
 COPY --from=build /usr/src/app ./
-
 
 # เปิดพอร์ต (Strapi ใช้พอร์ตเริ่มต้น 1337)
 EXPOSE 1337
