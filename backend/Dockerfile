@@ -4,8 +4,8 @@ FROM node:20 AS build
 # กำหนด Working Directory
 WORKDIR /usr/src/app
 
-# คัดลอกไฟล์ package.json และ package-lock.json
-COPY package.json package-lock.json ./
+# คัดลอกไฟล์ package.json
+COPY backend/package*.json ./
 
 # ติดตั้ง dependencies
 RUN npm install --force
@@ -15,6 +15,16 @@ COPY . .
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
+
+RUN mkdir -p .tmp && \
+    echo "HOST=0.0.0.0" >> .env && \
+    echo "PORT=1337" >> .env && \
+    echo "APP_KEYS=$(openssl rand -base64 32)" >> .env && \
+    echo "API_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
+    echo "ADMIN_JWT_SECRET=$(openssl rand -base64 32)" >> .env && \
+    echo "DATABASE_CLIENT=sqlite" >> .env && \
+    echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
+    echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
 # ใช้ Alpine Linux เพื่อรันแอปใน Production
 FROM node:20
