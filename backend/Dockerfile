@@ -18,7 +18,8 @@ COPY backend/config/middlewares.js ./config/middlewares.js
 COPY backend/mockConfig/server.js ./mockConfig/server.js
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
-RUN echo "HOST=0.0.0.0" >> .env && \
+RUN apk add --no-cache openssl && \
+    echo "HOST=0.0.0.0" >> .env && \
     echo "PORT=1337" >> .env && \
     echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env && \
     echo "API_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
@@ -28,7 +29,7 @@ RUN echo "HOST=0.0.0.0" >> .env && \
     echo "DATABASE_CLIENT=sqlite" >> .env && \
     echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
     echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
-RUN echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env
+# RUN echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env
 
 RUN cat .env
 # สร้างไฟล์ build (ใช้สำหรับ Production)
