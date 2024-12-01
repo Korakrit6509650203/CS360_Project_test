@@ -5,7 +5,7 @@ FROM node:18-alpine AS build
 WORKDIR /usr/src/app
 
 # คัดลอกไฟล์ package.json และ package-lock.json
-COPY backend/package.json ./
+COPY backend/package.json backend/package-lock.json ./
 
 # ติดตั้ง dependencies
 RUN npm install --force
@@ -28,7 +28,9 @@ RUN echo "HOST=0.0.0.0" >> .env && \
     echo "DATABASE_CLIENT=sqlite" >> .env && \
     echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
     echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
+RUN echo "APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32),$(openssl rand -base64 32)" >> .env
 
+RUN cat .env
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
 
@@ -41,8 +43,15 @@ WORKDIR /usr/src/app
 # คัดลอก Dependencies จาก stage build มา
 COPY --from=build /usr/src/app/node_modules ./node_modules
 
+# คัดลอกไฟล์ .env ที่สร้างในขั้นตอน build
+COPY --from=build /usr/src/app/.env ./.env
+
+# คัดลอกไฟล์โค้ดทั้งหมด (รวมไฟล์ build)
+COPY --from=build /usr/src/app/config/server.js ./config/server.js
+
 # คัดลอกไฟล์โค้ดทั้งหมด (รวมไฟล์ build)
 COPY --from=build /usr/src/app ./
+
 
 # เปิดพอร์ต (Strapi ใช้พอร์ตเริ่มต้น 1337)
 EXPOSE 1337
