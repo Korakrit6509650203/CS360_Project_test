@@ -41,7 +41,7 @@ FROM node:18-alpine
 WORKDIR /usr/src/app
 
 # ระบุไฟล์ที่ต้องการคัดลอกจาก stage "build"
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/node_modules/@strapi/strapi/dist ./dist
 
 # คัดลอก Dependencies จาก stage build มา
 COPY --from=build /usr/src/app/node_modules ./node_modules
