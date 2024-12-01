@@ -11,8 +11,8 @@ COPY backend/package.json ./
 RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
-# COPY . .
 COPY backend/public ./public
+COPY backend/config/database.js ./config/database.js
 
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
