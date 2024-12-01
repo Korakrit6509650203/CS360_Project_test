@@ -14,7 +14,8 @@ RUN npm install --force
 COPY backend/public ./public
 COPY backend/config/database.js ./config/database.js
 COPY backend/config/server.js ./config/server.js
-COPY backend/config ./config
+COPY backend/config/middlewares.js ./config/middlewares.js
+COPY backend/mockConfig/server.js ./mockConfig/server.js
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง ๆ
 RUN echo "HOST=0.0.0.0" >> .env && \
@@ -41,7 +42,7 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # คัดลอกไฟล์โค้ดทั้งหมด (รวมไฟล์ build)
-COPY --from=build /usr/src/app .
+COPY --from=build /usr/src/app ./
 
 # เปิดพอร์ต (Strapi ใช้พอร์ตเริ่มต้น 1337)
 EXPOSE 1337
