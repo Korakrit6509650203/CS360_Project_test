@@ -33,6 +33,12 @@ RUN echo "HOST=0.0.0.0" >> .env && \
 # Build the app
 RUN npm run build
 
+# ใช้ Alpine Linux เพื่อรันแอปใน Production
+FROM node:20
+
+# กำหนด Working Directory
+WORKDIR /usr/src/app
+
 # ติดตั้ง serve เพื่อ serve static files
 COPY --from=build /usr/src/app/node_modules ./node_modules
 
