@@ -1,9 +1,10 @@
 name: CI - Backend and Frontend Docker Testing
 
 on:
-  push:
-    branches:
-      - '*'
+  # push:
+  #   branches:
+  #     - '*'
+  workflow_dispatch:
 
 jobs:
   backend-build-and-test:
