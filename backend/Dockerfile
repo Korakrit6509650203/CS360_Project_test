@@ -5,7 +5,7 @@ FROM node:20
 WORKDIR /usr/src/app
 
 # คัดลอกไฟล์ package.json
-COPY backend/package.json ./
+COPY backend/package*.json ./
 
 # ติดตั้ง dependencies
 RUN npm install --force
