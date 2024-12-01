@@ -5,13 +5,18 @@ FROM node:18-alpine AS build
 WORKDIR /usr/src/app
 
 # คัดลอกไฟล์ package.json
-COPY backend/package*.json ./
+COPY backend/package.json ./
 
 # ติดตั้ง dependencies
 RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
-COPY . .
+# COPY . .
+
+# คัดลอกโค้ดทั้งหมดไปยัง container
+COPY backend/mockConfig ./mockConfig
+COPY backend/routes ./routes
+COPY backend/src ./src
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
