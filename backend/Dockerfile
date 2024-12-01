@@ -4,31 +4,17 @@ FROM node:18-alpine AS build
 # กำหนด Working Directory
 WORKDIR /usr/src/app
 
-# คัดลอกไฟล์ package.json
-COPY backend/package*.json ./
+# คัดลอกไฟล์ package.json และ package-lock.json
+COPY package.json package-lock.json ./
 
 # ติดตั้ง dependencies
-RUN npm install --force
+RUN npm install
 
-# คัดลอกโค้ดทั้งหมดไปยัง container
-COPY backend/mockConfig ./mockConfig
-COPY backend/routes ./routes
-COPY backend/src ./src
-COPY backend/public ./public
-COPY backend/config ./config
+# คัดลอกไฟล์โค้ดทั้งหมด
+COPY . .
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
-
-RUN mkdir -p .tmp && \
-    echo "HOST=0.0.0.0" >> .env && \
-    echo "PORT=1337" >> .env && \
-    echo "APP_KEYS=$(openssl rand -base64 32)" >> .env && \
-    echo "API_TOKEN_SALT=$(openssl rand -base64 16)" >> .env && \
-    echo "ADMIN_JWT_SECRET=$(openssl rand -base64 32)" >> .env && \
-    echo "DATABASE_CLIENT=sqlite" >> .env && \
-    echo "DATABASE_FILENAME=.tmp/data.db" >> .env && \
-    echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
 # ใช้ Alpine Linux เพื่อรันแอปใน Production
 FROM node:18-alpine
@@ -46,4 +32,4 @@ COPY --from=build /usr/src/app .
 EXPOSE 1337
 
 # เริ่มแอป Strapi
-CMD ["sh", "-c", "source .env && npm start"]
+CMD ["npm", "start"]
