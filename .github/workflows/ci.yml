@@ -39,8 +39,7 @@ jobs:
       - name: Run Backend Tests
         run: |
           docker ps
-          docker exec test-backend-container npm run test-back
-
+          docker exec test-backend-container npm run test
       - name: Backend Cleanup
         if: always()
         run: |
