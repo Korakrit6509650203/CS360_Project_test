@@ -12,6 +12,8 @@ RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
 # COPY . .
+COPY backend/public ./public
+
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
