@@ -8,13 +8,14 @@ WORKDIR /usr/src/app
 COPY backend/package*.json ./
 
 # ติดตั้ง dependencies
-RUN npm install -g npm@10.9.1 --force
+RUN npm install --force
 
 # คัดลอกโค้ดทั้งหมดไปยัง container
 COPY backend/mockConfig ./mockConfig
 COPY backend/routes ./routes
 COPY backend/src ./src
 COPY backend/public ./public
+COPY backend/config ./config
 
 # สร้างไฟล์ build (ใช้สำหรับ Production)
 RUN npm run build
