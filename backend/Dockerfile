@@ -5,7 +5,7 @@ FROM node:18-alpine AS build
 WORKDIR /usr/src/app
 
 # คัดลอกไฟล์ package.json และ package-lock.json
-COPY package.json package-lock.json ./
+COPY backend/package.json ./
 
 # ติดตั้ง dependencies
 RUN npm install --force
