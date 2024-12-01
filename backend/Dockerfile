@@ -1,5 +1,5 @@
 # ใช้ Node.js เป็น base image
-FROM node:20 AS build
+FROM node:18-alpine AS build
 
 # กำหนด Working Directory
 WORKDIR /usr/src/app
@@ -27,7 +27,7 @@ RUN mkdir -p .tmp && \
     echo "JWT_SECRET=$(openssl rand -base64 32)" >> .env
 
 # ใช้ Alpine Linux เพื่อรันแอปใน Production
-FROM node:20
+FROM node:18-alpine
 
 # กำหนด Working Directory
 WORKDIR /usr/src/app
