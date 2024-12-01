@@ -1,7 +1,9 @@
 # Stage 1: Build Stage
 FROM node:20 AS build
+
+# กำหนด Working Directory
 WORKDIR /usr/src/app
-COPY package*.json ./
+COPY backend/package*.json ./
 RUN npm install --force
 COPY . .
 RUN npm run build
