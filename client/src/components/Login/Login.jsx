@@ -13,7 +13,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(process.env.REACT_APP_DEV_URL);
+        console.log(`The API base URL (REACT_APP_DEV_URL) is: ${process.env.REACT_APP_DEV_URL} <===`);
         try {
             const response = await fetch(`${process.env.REACT_APP_DEV_URL}/api/auth/local`, {
                 method: 'POST',
