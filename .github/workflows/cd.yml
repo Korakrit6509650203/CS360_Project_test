@@ -88,8 +88,8 @@ jobs:
           # Create .env
           cat <<EOT > .env
           REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337
-          REACT_APP_STRIPE_APP_KEY=dummy_key
-          REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key
+          REACT_APP_STRIPE_APP_KEY=$(openssl rand -hex 32)
+          REACT_APP_STRIPE_PUBLISHABLE_KEY=$(openssl rand -hex 32)
           EOT
           echo ".env file created successfully."
           cat .env
@@ -108,7 +108,8 @@ jobs:
       # Step 7: Deploy Frontend Docker Container
       - name: Deploy Frontend Docker Container
         run: |
-          docker run -d --name cs360_frontend_container \
+          cat .env
+          sudo docker run -d --name cs360_frontend_container \
             --env-file .env \
             -p 3000:3000 \
             ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
