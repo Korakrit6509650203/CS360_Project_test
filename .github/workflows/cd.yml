@@ -102,6 +102,6 @@ jobs:
           sudo docker ps -a
           sudo docker logs cs360_frontend_container
           
-          sudo docker exec -it cs360_frontend_container cat /usr/src/app/.env
+          sudo docker exec cs360_frontend_container cat /usr/src/app/.env
          
           echo "cs360_frontend_container successfully."

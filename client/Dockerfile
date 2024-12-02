@@ -20,7 +20,7 @@ COPY client/babel.config.js ./babel.config.js
 #     echo "REACT_APP_STRIPE_APP_KEY=dummy_key" >> .env && \
 #     echo "REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key" >> .env
 
-RUN cat .env
+# RUN cat .env
 # Build the app
 RUN npm run build
 
