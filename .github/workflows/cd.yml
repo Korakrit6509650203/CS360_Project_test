@@ -94,7 +94,12 @@ jobs:
           echo ".env file created successfully."
           cat .env
 
-          scp -i ${{ secrets.AWS_KP_NAME }} .env ec2-user@$INSTANCE_PUBLIC_IP:/home/ec2-user/.env
+          sudo docker run -d --name cs360_frontend_container \
+          --env-file .env \ -p 3000:3000 \
+          ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
+          sudo docker ps -a
+          sudo docker logs cs360_frontend_container
+          sudo docker exec cs360_frontend_container printenv
 
           echo "successfully."
 
