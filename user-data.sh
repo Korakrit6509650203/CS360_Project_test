@@ -21,10 +21,11 @@ echo \"REACT_APP_STRIPE_APP_KEY=\$(openssl rand -hex 32)\" > /usr/src/app/.env &
 echo \"REACT_APP_DEV_URL=http://\$PUBLIC_IP:1337\" >> /usr/src/app/.env &&
 echo \"REACT_APP_STRIPE_PUBLISHABLE_KEY=\$(openssl rand -hex 32)\" >> /usr/src/app/.env
 echo "Exiting script..."
-exit 0
-"
+exit 0"
 
 sudo docker pull korakrit/cs360_backend_image_test:latest
-sudo docker run -p 1337:1337 --name cs360_backend_container korakrit/cs360_backend_image_test:latest
+sudo docker run -p -d 1337:1337 --name cs360_backend_container korakrit/cs360_backend_image_test:latest
+
+sudo docker exec cs360_frontend_container npm run build
 
 echo "Docker containers are running."
