@@ -16,7 +16,7 @@ COPY client/src ./src
 COPY client/babel.config.js ./babel.config.js
 
 # สร้างไฟล์ .env 
-RUN echo "REACT_APP_DEV_URL=http://0.0.0.0:1337" >> .env && \
+RUN echo "REACT_APP_DEV_URL=http://ec2-xx-xx-xx-xx.compute-1.amazonaws.com:1337" >> .env && \
     echo "REACT_APP_STRIPE_APP_KEY=dummy_key" >> .env && \
     echo "REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key" >> .env
 

@@ -101,7 +101,5 @@ jobs:
           -p 3000:3000 \${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
           sudo docker ps -a
           sudo docker logs cs360_frontend_container
-          
-          sudo docker exec cs360_frontend_container cat /usr/src/app/.env
          
           echo "cs360_frontend_container successfully."
