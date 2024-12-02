@@ -14,7 +14,20 @@ newgrp docker
 echo "Starting Docker pull and run..."
 
 sudo docker pull korakrit/cs360_frontend_image_test:latest
-sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
+cat <<EOT > .env
+REACT_APP_STRIPE_APP_KEY=$(openssl rand -hex 32)
+PUBLIC_IP=$(curl -s ifconfig.me)  # ดึง IP สาธารณะ
+REACT_APP_DEV_URL="http://$PUBLIC_IP:1337"
+REACT_APP_STRIPE_PUBLISHABLE_KEY=$(openssl rand -hex 32)
+EOT
+echo "Generated .env file:"
+cat .env
+
+sudo docker run -d --name cs360_frontend_container \
+    --env-file .env \
+    -p 3000:3000 \ korakrit/cs360_frontend_image_test:latest
+
+#sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
 
 sudo docker pull korakrit/cs360_backend_image_test:latest
 sudo docker run -p 1337:1337 --name cs360_backend_container korakrit/cs360_backend_image_test:latest
