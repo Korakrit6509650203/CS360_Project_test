@@ -85,9 +85,7 @@ jobs:
             --output text)
           echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
 
-      # Step 6: Create .env File for Frontend
-      - name: Create .env File for Frontend
-        run: |
+          # Create .env
           cat <<EOT > .env
           REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337
           REACT_APP_STRIPE_APP_KEY=dummy_key
@@ -95,6 +93,17 @@ jobs:
           EOT
           echo ".env file created successfully."
           cat .env
+
+      # # Step 6: Create .env File for Frontend
+      # - name: Create .env File for Frontend
+      #   run: |
+      #     cat <<EOT > .env
+      #     REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337
+      #     REACT_APP_STRIPE_APP_KEY=dummy_key
+      #     REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key
+      #     EOT
+      #     echo ".env file created successfully."
+      #     cat .env
           
       # Step 7: Deploy Frontend Docker Container
       - name: Deploy Frontend Docker Container
