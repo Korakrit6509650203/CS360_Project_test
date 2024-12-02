@@ -18,7 +18,6 @@ sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_f
 sudo docker exec cs360_frontend_container sh -c "
 PUBLIC_IP=\$(curl -s ifconfig.me) &&
 echo \"REACT_APP_STRIPE_APP_KEY=\$(openssl rand -hex 32)\" > /usr/src/app/.env &&
-echo \"PUBLIC_IP=\$PUBLIC_IP\" >> /usr/src/app/.env &&
 echo \"REACT_APP_DEV_URL=http://\$PUBLIC_IP:1337\" >> /usr/src/app/.env &&
 echo \"REACT_APP_STRIPE_PUBLISHABLE_KEY=\$(openssl rand -hex 32)\" >> /usr/src/app/.env
 echo "Exiting script..."
