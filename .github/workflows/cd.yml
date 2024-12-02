@@ -85,21 +85,6 @@ jobs:
             --output text)
           echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
           
-
-      # Step 5: Deploy Frontend Docker Container
-      - name: Deploy Frontend Docker Container on EC2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: |
-          INSTANCE_PUBLIC_IP=$(aws ec2 describe-instances \
-            --instance-ids $INSTANCE_ID \
-            --query 'Reservations[0].Instances[0].PublicIpAddress' \
-            --output text)
-          echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
-
           # Create .env
           cat <<EOT > .env
           REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337
@@ -108,7 +93,11 @@ jobs:
           EOT
           echo ".env file created successfully."
           cat .env
-          
+
           scp -i ${{ secrets.AWS_KP_NAME }} .env ec2-user@$INSTANCE_PUBLIC_IP:/home/ec2-user/.env
 
           echo "successfully."
+
+          
+          
+         
