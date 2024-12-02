@@ -104,5 +104,4 @@ jobs:
           
           sudo docker exec -it cs360_frontend_container cat /usr/src/app/.env
          
-
-          echo "successfully."
+          echo "cs360_frontend_container successfully."
