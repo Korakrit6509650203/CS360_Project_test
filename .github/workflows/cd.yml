@@ -84,3 +84,22 @@ jobs:
             --query 'Reservations[0].Instances[0].PublicIpAddress' \
             --output text)
           echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
+
+      # Step 6: Create .env File for Frontend
+      - name: Create .env File for Frontend
+        run: |
+          cat <<EOT > .env
+          REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337
+          REACT_APP_STRIPE_APP_KEY=dummy_key
+          REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key
+          EOT
+          echo ".env file created successfully."
+
+      # Step 7: Deploy Frontend Docker Container
+      - name: Deploy Frontend Docker Container
+        run: |
+          docker run -d --name frontend-container \
+            --env-file .env \
+            -p 3000:3000 \
+            ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
+          echo "Frontend container deployed successfully."
