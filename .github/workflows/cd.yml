@@ -84,6 +84,17 @@ jobs:
             --query 'Reservations[0].Instances[0].PublicIpAddress' \
             --output text)
           echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
+          
+
+      # Step 5: Deploy Frontend Docker Container
+      - name: Deploy Frontend Docker Container on EC2
+        run: |
+          # ดึง Public IP ของ EC2 Instance
+          INSTANCE_PUBLIC_IP=$(aws ec2 describe-instances \
+            --instance-ids $INSTANCE_ID \
+            --query 'Reservations[0].Instances[0].PublicIpAddress' \
+            --output text)
+          echo "Instance Public IP: $INSTANCE_PUBLIC_IP"
 
           # Create .env
           cat <<EOT > .env
@@ -94,15 +105,6 @@ jobs:
           echo ".env file created successfully."
           cat .env
           
-      # Step 5: Deploy Frontend Docker Container
-      - name: Deploy Frontend Docker Container
-        run: |
-          cat .env
-          sudo docker run -d --name cs360_frontend_container \
-            --env-file .env \
-            -p 3000:3000 \
-            ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
-          sudo docker ps -a
-          sudo docker logs cs360_frontend_container
-          sudo docker inspect cs360_frontend_container | grep IPAddress
-          echo "Frontend container deployed successfully."
+          scp -i ${{ secrets.AWS_KP_NAME }} .env ec2-user@$INSTANCE_PUBLIC_IP:/home/ec2-user/.env
+
+          echo "successfully."
