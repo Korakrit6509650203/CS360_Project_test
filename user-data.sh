@@ -13,13 +13,8 @@ newgrp docker
 
 echo "Starting Docker pull and run..."
 
-# sudo docker run -d --name cs360_frontend_container \
-#     --env-file .env \
-#     -p 3000:3000 \ korakrit/cs360_frontend_image_test:latest
-
 sudo docker pull korakrit/cs360_frontend_image_test:latest
 sudo docker run -d -p 3000:3000 --name cs360_frontend_container korakrit/cs360_frontend_image_test:latest
-sudo docker exec cs360_frontend_container find / -name ".env"
 sudo docker exec cs360_frontend_container sh -c "
 PUBLIC_IP=\$(curl -s ifconfig.me) &&
 echo \"REACT_APP_STRIPE_APP_KEY=\$(openssl rand -hex 32)\" > /usr/src/app/.env &&
