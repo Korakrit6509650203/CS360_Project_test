@@ -16,10 +16,9 @@ COPY client/src ./src
 COPY client/babel.config.js ./babel.config.js
 
 # สร้างไฟล์ .env 
-# RU export PUBLIC_IP=$(curl -s ifconfig.me) && \
-RUN echo "REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337" >> .env && \
-    echo "REACT_APP_STRIPE_APP_KEY=dummy_key" >> .env && \
-    echo "REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key" >> .env
+# RUN echo "REACT_APP_DEV_URL=http://$INSTANCE_PUBLIC_IP:1337" >> .env && \
+#     echo "REACT_APP_STRIPE_APP_KEY=dummy_key" >> .env && \
+#     echo "REACT_APP_STRIPE_PUBLISHABLE_KEY=dummy_key" >> .env
 
 RUN cat .env
 # Build the app
