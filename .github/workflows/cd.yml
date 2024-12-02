@@ -104,5 +104,5 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/cs360_frontend_image_test:latest
           sudo docker ps -a
           sudo docker logs cs360_frontend_container
-          sudodocker inspect cs360_frontend_container
+          sudo docker inspect cs360_frontend_container | grep IPAddress
           echo "Frontend container deployed successfully."
