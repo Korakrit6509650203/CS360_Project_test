@@ -12,7 +12,8 @@ RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
 COPY backend/ .
-# COPY backend/mockConfig /usr/src/app/backend/mockConfig
+COPY backend/mockConfig ./mockConfig
+COPY backend/test ./test
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง
 RUN apk add --no-cache openssl && \
