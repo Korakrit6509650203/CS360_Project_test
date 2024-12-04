@@ -1,10 +1,10 @@
 name: CI - Backend and Frontend Docker Testing
 
 on:
-  push:
-    branches:
-      - '*'
-  # workflow_dispatch:
+  # push:
+  #   branches:
+  #     - '*'
+  workflow_dispatch:
 
 jobs:
   backend-build-and-test:
@@ -39,6 +39,7 @@ jobs:
       - name: Run Backend Tests
         run: |
           docker ps
+
           docker exec test-backend-container sh -c "npm install --force && npm run test"
 
       - name: Backend Cleanup
