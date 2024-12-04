@@ -12,7 +12,7 @@ RUN npm install --force
 
 # คัดลอกไฟล์โค้ดทั้งหมด
 COPY backend/ .
-COPY backend/mockConfig/server ./server
+COPY backend/mockConfig/server ./mockConfig/server
 COPY backend/tests ./tests
 
 # สร้างไฟล์ .env โดยสุ่มค่าต่าง
