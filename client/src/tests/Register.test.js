@@ -45,7 +45,7 @@ describe('Register Component - Tests', () => {
         expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
         expect(screen.getByLabelText('Password')).toBeInTheDocument();
         expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /SignUp/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /Register/i })).toBeInTheDocument();
     });
 
     test('shows error when username is shorter than 5 characters', async () => {
