@@ -40,12 +40,12 @@ describe('Register Component - Tests', () => {
     test('renders the register form', () => {
         renderRegister();
 
-        expect(screen.getByRole('heading', { name: /Register/i })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /SignUp/i })).toBeInTheDocument();
         expect(screen.getByLabelText(/Username/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
         expect(screen.getByLabelText('Password')).toBeInTheDocument();
         expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /Register/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /SignUp/i })).toBeInTheDocument();
     });
 
     test('shows error when username is shorter than 5 characters', async () => {
