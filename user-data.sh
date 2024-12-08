@@ -3,7 +3,6 @@
 # Update the package manager and install Docker
 sudo yum update -y
 sudo yum install -y docker
-
 # Start Docker and enable it to start on boot
 sudo service docker start
 sudo systemctl enable docker
